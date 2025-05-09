@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Game Sales Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #0e0e0e;
+            color: #fff;
+        }
+
+        header {
+            background: linear-gradient(to right, #1f1c2c, #928dab);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #1e1e1e;
+            color: #00ffcc;
+        }
+
+        footer {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Video Game Sales Dashboard</h1>
+    </header>
+
+    <section>
+        <h2>Overview</h2>
+        <p><strong>Total Games:</strong> {{ stats.total_records }}</p>
+        <p><strong>Details Per Game:</strong> {{ stats.total_features }}</p>
+
+        <h2>Game Data Summary</h2>
+        {% for feature, metrics in stats.summary_stats.items %}
+            <h3>{{ feature }}</h3>
+            <ul>
+                {% for stat, value in metrics.items %}
+                <li><strong>{{ stat|capfirst }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+
+        <h2>Most Popular Platforms</h2>
+        <ul>
+            {% for key, value in stats.top_platforms.items %}
+            <li><strong>{{ key }}</strong>: {{ value }} games</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Most Common Genres</h2>
+        <ul>
+            {% for key, value in stats.top_genres.items %}
+            <li><strong>{{ key }}</strong>: {{ value }} games</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Top Game Publishers</h2>
+        <ul>
+            {% for key, value in stats.top_publishers.items %}
+            <li><strong>{{ key }}</strong>: {{ value }} games</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Game Rating Breakdown</h2>
+        <ul>
+            {% for key, value in stats.rating_distribution.items %}
+            <li><strong>{{ key }}</strong>: {{ value }} games</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Prediction Model Results</h2>
+        <ul>
+            <li><strong>Prediction Error (MSE):</strong> {{ stats.model_mse }}</li>
+            <li><strong>Accuracy (R² Score):</strong> {{ stats.model_r2 }}</li>
+        </ul>
+
+        <h3>Cross-Validation Results (5-Fold)</h3>
+        <ul>
+            {% for result in stats.cv_results.folds %}
+            <li>
+                <strong>Fold {{ result.fold }}</strong> – 
+                MSE: {{ result.mse }}, 
+                R²: {{ result.r2 }}
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <p><strong>Mean R²:</strong> {{ stats.cv_results.mean_r2 }}</p>
+        <p><strong>R² Standard Deviation:</strong> {{ stats.cv_results.std_r2 }}</p>
+        
+        
+        
+
+
+        <h2>Model Learning Progress</h2>
+        <img src="data:image/png;base64,{{ stats.learning_curve }}" alt="Learning Curve" style="max-width:100%;">
+    </section>
+
+    <footer>
+        &copy; 2025 GamePredictor.ai – All rights reserved.
+    </footer>
+
+</body>
+</html>

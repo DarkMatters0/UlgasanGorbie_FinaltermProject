@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Game Global Sales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e0e0e;
+            color: #fff;
+        }
+        nav {
+            background-color: #1e1e1e;
+            padding: 15px;
+            text-align: right;
+        }
+        nav a {
+            color: #00ffcc;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        form {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 30px auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background: #00ffcc;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #00e6b8;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .alert {
+            background: #00ffcc;
+            color: #000;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        footer {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="{% url 'about' %}">About Dataset</a>
+        <a href="{% url 'home' %}">Home</a>
+        {% if user.is_authenticated %}
+          <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" >Log Out</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}">Log In</a>
+        {% endif %}
+    </nav>
+
+    <h2>Video Game Sales Predictor</h2>
+    {% if result %}
+    <div class="alert">
+        <h3>Prediction Result: {{ result }}</h3>
+    </div>
+    {% endif %}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="platform">Platform:</label>
+        <select id="platform" name="Platform" required>
+            <option value="" disabled selected>Select platform</option>
+            <option>Wii</option>
+            <option>NES</option>
+            <option>GB</option>
+            <option>DS</option>
+            <option>X360</option>
+            <option>PS3</option>
+            <option>PS2</option>
+            <option>SNES</option>
+            <option>GBA</option>
+            <option>PS4</option>
+            <option>3DS</option>
+            <option>N64</option>
+            <option>PS</option>
+            <option>XB</option>
+            <option>PC</option>
+            <option>2600</option>
+            <option>PSP</option>
+            <option>XOne</option>
+            <option>WiiU</option>
+            <option>GC</option>
+            <option>GEN</option>
+            <option>DC</option>
+            <option>PSV</option>
+            <option>SAT</option>
+            <option>SCD</option>
+            <option>WS</option>
+            <option>NG</option>
+            <option>TG16</option>
+            <option>3DO</option>
+            <option>GG</option>
+            <option>PCFX</option>
+        </select>
+    
+        <label for="genre">Genre:</label>
+        <select id="genre" name="Genre" required>
+            <option value="" disabled selected>Select genre</option>
+            <option>Sports</option>
+            <option>Platform</option>
+            <option>Racing</option>
+            <option>Role-Playing</option>
+            <option>Puzzle</option>
+            <option>Misc</option>
+            <option>Shooter</option>
+            <option>Simulation</option>
+            <option>Action</option>
+            <option>Fighting</option>
+            <option>Adventure</option>
+            <option>Strategy</option>
+        </select>
+    
+        <label for="rating">Rating:</label>
+        <select id="rating" name="Rating" required>
+            <option value="" disabled selected>Select rating</option>
+            <option>E</option>
+            <option>M</option>
+            <option>T</option>
+            <option>E10+</option>
+            <option>K-A</option>
+            <option>AO</option>
+            <option>EC</option>
+            <option>RP</option>
+        </select>
+    
+        <label for="publisher">Publisher:</label>
+        <input type="text" id="publisher" name="Publisher" required>
+    
+        <label for="developer">Developer:</label>
+        <input type="text" id="developer" name="Developer" required>
+    
+        <label for="year">Year of Release:</label>
+        <input type="number" id="year" name="Year_of_Release" required>
+    
+        <label for="critic_score">Critic Score:</label>
+        <input type="number" step="0.1" id="critic_score" name="Critic_Score" required>
+    
+        <label for="critic_count">Critic Count:</label>
+        <input type="number" id="critic_count" name="Critic_Count" required>
+    
+        <label for="user_score">User Score:</label>
+        <input type="number" step="0.1" id="user_score" name="User_Score" required>
+    
+        <label for="user_count">User Count:</label>
+        <input type="number" id="user_count" name="User_Count" required>
+    
+        <button type="submit">Predict Global Sales</button>
+    </form>
+    
+
+
+
+</body>
+</html>
